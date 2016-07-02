@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bs.lsx.dao.PracticePaperMapper" >
+  <resultMap id="BaseResultMap" type="com.bs.lsx.entity.PracticePaper" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="paper_name" property="paperName" jdbcType="VARCHAR" />
+    <result column="total_point" property="totalPoint" jdbcType="INTEGER" />
+    <result column="pass_point" property="passPoint" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="duration" property="duration" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="state" property="state" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.bs.lsx.entity.PracticePaperWithBLOBs" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="answer_sheet" property="answerSheet" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, paper_name, total_point, pass_point, creator, duration, create_time, state
+  </sql>
+  <sql id="Blob_Column_List" >
+    content, answer_sheet
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from practice_paper
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from practice_paper
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bs.lsx.entity.PracticePaperWithBLOBs" >
+    insert into practice_paper (id, paper_name, total_point, 
+      pass_point, creator, duration, 
+      create_time, state, content, 
+      answer_sheet)
+    values (#{id,jdbcType=INTEGER}, #{paperName,jdbcType=VARCHAR}, #{totalPoint,jdbcType=INTEGER}, 
+      #{passPoint,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, #{duration,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=DATE}, #{state,jdbcType=BIT}, #{content,jdbcType=LONGVARCHAR}, 
+      #{answerSheet,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bs.lsx.entity.PracticePaperWithBLOBs" >
+    insert into practice_paper
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="paperName != null" >
+        paper_name,
+      </if>
+      <if test="totalPoint != null" >
+        total_point,
+      </if>
+      <if test="passPoint != null" >
+        pass_point,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="duration != null" >
+        duration,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="answerSheet != null" >
+        answer_sheet,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="paperName != null" >
+        #{paperName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPoint != null" >
+        #{totalPoint,jdbcType=INTEGER},
+      </if>
+      <if test="passPoint != null" >
+        #{passPoint,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="duration != null" >
+        #{duration,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="answerSheet != null" >
+        #{answerSheet,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bs.lsx.entity.PracticePaperWithBLOBs" >
+    update practice_paper
+    <set >
+      <if test="paperName != null" >
+        paper_name = #{paperName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPoint != null" >
+        total_point = #{totalPoint,jdbcType=INTEGER},
+      </if>
+      <if test="passPoint != null" >
+        pass_point = #{passPoint,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="duration != null" >
+        duration = #{duration,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=BIT},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="answerSheet != null" >
+        answer_sheet = #{answerSheet,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.bs.lsx.entity.PracticePaperWithBLOBs" >
+    update practice_paper
+    set paper_name = #{paperName,jdbcType=VARCHAR},
+      total_point = #{totalPoint,jdbcType=INTEGER},
+      pass_point = #{passPoint,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      duration = #{duration,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=DATE},
+      state = #{state,jdbcType=BIT},
+      content = #{content,jdbcType=LONGVARCHAR},
+      answer_sheet = #{answerSheet,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bs.lsx.entity.PracticePaper" >
+    update practice_paper
+    set paper_name = #{paperName,jdbcType=VARCHAR},
+      total_point = #{totalPoint,jdbcType=INTEGER},
+      pass_point = #{passPoint,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=VARCHAR},
+      duration = #{duration,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=DATE},
+      state = #{state,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,11 @@
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+             http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <beans:bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <beans:property name="basePackage" value="com.bs.lsx.dao"/>
+        <beans:property name= "sqlSessionFactory" ref="sqlSessionFactoryBean" />
+    </beans:bean>
+    
+</beans:beans>

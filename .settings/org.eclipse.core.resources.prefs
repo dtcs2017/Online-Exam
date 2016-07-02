@@ -1,0 +1,5 @@
+eclipse.preferences.version=1
+encoding//src/main/webapp/WEB-INF/view/admin/header.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/view/admin/question/add.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/view/admin/question/update.jsp=UTF-8
+encoding/<project>=UTF-8

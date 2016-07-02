@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bs.lsx.dao.QuestionMapper" >
+  <resultMap id="BaseResultMap" type="com.bs.lsx.entity.Question" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="questiontype_id" property="questiontypeId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="optiona" property="optionA" jdbcType="VARCHAR" />
+    <result column="optionb" property="optionB" jdbcType="VARCHAR" />
+    <result column="optionc" property="optionC" jdbcType="VARCHAR" />
+    <result column="optiond" property="optionD" jdbcType="VARCHAR" />
+    <result column="answer" property="answer" jdbcType="VARCHAR" />
+    <result column="analysis" property="analysis" jdbcType="VARCHAR" />
+    <result column="points" property="points" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="BIT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    
+    <!-- 试题类型 -->
+    <result column="type" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, questiontype_id, name, content, optionA, optionB, optionC, optionD, answer, analysis, points, state, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from question
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from question
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bs.lsx.entity.Question" >
+    insert into question (id, questiontype_id, name, 
+      content,optiona, optionb, optionc, optiond, answer, 
+      analysis, points, state, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{questiontypeId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{optionA,jdbcType=VARCHAR},#{optionB,jdbcType=VARCHAR},
+      #{optionC,jdbcType=VARCHAR},#{optionD,jdbcType=VARCHAR},#{answer,jdbcType=VARCHAR}, 
+      #{analysis,jdbcType=VARCHAR}, #{points,jdbcType=INTEGER}, #{state,jdbcType=BIT}, 
+      #{createTime,jdbcType=TIMESTAMP})
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bs.lsx.entity.Question" >
+    insert into question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="questiontypeId != null" >
+        questiontype_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="optionA != null" >
+        optiona,
+      </if>
+      <if test="optionB != null" >
+        optionb,
+      </if>
+      <if test="optionC != null" >
+        optionc,
+      </if>
+      <if test="optionD != null" >
+        optiond,
+      </if>
+      <if test="answer != null" >
+        answer,
+      </if>
+      <if test="analysis != null" >
+        analysis,
+      </if>
+      <if test="points != null" >
+        points,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+       <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="questiontypeId != null" >
+        #{questiontypeId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="optionA != null" >
+        #{optionA,jdbcType=VARCHAR},
+      </if>
+      <if test="optionB != null" >
+        #{optionB,jdbcType=VARCHAR},
+      </if>
+      <if test="optionC != null" >
+        #{optionC,jdbcType=VARCHAR},
+      </if>
+      <if test="optionD != null" >
+        #{optionD,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="analysis != null" >
+        #{analysis,jdbcType=VARCHAR},
+      </if>
+      <if test="points != null" >
+        #{points,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bs.lsx.entity.Question" >
+    update question
+    <set >
+      <if test="questiontypeId != null" >
+        questiontype_id = #{questiontypeId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="optionA != null" >
+        optiona = #{optionA,jdbcType=VARCHAR},
+      </if>
+      <if test="optionB != null" >
+        optionb = #{optionB,jdbcType=VARCHAR},
+      </if>
+      <if test="optionC != null" >
+        optionc = #{optionC,jdbcType=VARCHAR},
+      </if>
+      <if test="optionB != null" >
+        optiond = #{optionD,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null" >
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="analysis != null" >
+        analysis = #{analysis,jdbcType=VARCHAR},
+      </if>
+      <if test="points != null" >
+        points = #{points,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=BIT},
+      </if>
+      <if test="createTime != null" >
+        create_time #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bs.lsx.entity.Question" >
+    update question
+    set questiontype_id = #{questiontypeId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      optiona = #{optionA,jdbcType=VARCHAR},
+      optionb = #{optionB,jdbcType=VARCHAR},
+      optionc = #{optionC,jdbcType=VARCHAR},
+      optiond = #{optionD,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=VARCHAR},
+      analysis = #{analysis,jdbcType=VARCHAR},
+      points = #{points,jdbcType=INTEGER},
+      state = #{state,jdbcType=BIT},
+      create_time #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 查询试题数量 -->
+  <select id="getQuestionCount" resultType="java.lang.Integer">
+      select count(1) from question a left join question_type b on a.questiontype_id=b.id
+      <if test="vo != null">
+       <where>
+       <if test="vo.id != null" >
+        AND a.id = #{vo.id,jdbcType=INTEGER}
+      </if>
+      <if test="vo.questiontypeId != null" >
+        AND a.questiontype_id = #{vo.questiontypeId,jdbcType=INTEGER}
+      </if>
+      <if test="vo.name != null" >
+        AND a.name = #{vo.name,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.content != null" >
+        AND a.content = #{vo.content,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.optionA != null" >
+        AND a.optiona = #{vo.optionA,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.optionB != null" >
+        AND a.optionb = #{vo.optionB,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.optionC != null" >
+        AND a.optionc = #{vo.optionC,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.optionD != null" >
+        AND a.optiond = #{vo.optionD,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.answer != null" >
+        AND a.answer = #{vo.answer,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.analysis != null" >
+        AND a.analysis = #{vo.analysis,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.points != null" >
+        AND a.points = #{vo.points,jdbcType=INTEGER}
+      </if>
+      <if test="vo.state != null" >
+        AND a.state = #{vo.state,jdbcType=BIT}
+      </if>
+      <if test="vo.createTime != null" >
+        AND a.create_time = #{vo.createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="vo.type != null" >
+        AND b.type = #{vo.type,jdbcType=VARCHAR}
+      </if>
+       </where>
+  </if>
+  </select>
+  
+  <!-- 分页查询试题 -->
+  <select id="getQuestionPage" resultMap="BaseResultMap">
+       select * from question a left join question_type b on a.questiontype_id=b.id
+       <if test="vo != null">
+       <where>
+       <if test="vo.id != null" >
+        AND a.id = #{vo.id,jdbcType=INTEGER}
+      </if>
+      <if test="vo.questiontypeId != null" >
+        AND a.questiontype_id = #{vo.questiontypeId,jdbcType=INTEGER}
+      </if>
+      <if test="vo.name != null" >
+        AND a.name = #{vo.name,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.content != null" >
+        AND a.content = #{vo.content,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.optionA != null" >
+        AND a.optiona = #{vo.optionA,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.optionB != null" >
+        AND a.optionb = #{vo.optionB,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.optionC != null" >
+        AND a.optionc = #{vo.optionC,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.optionD != null" >
+        AND a.optiond = #{vo.optionD,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.answer != null" >
+        AND a.answer = #{vo.answer,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.analysis != null" >
+        AND a.analysis = #{vo.analysis,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.points != null" >
+        AND a.points = #{vo.points,jdbcType=INTEGER}
+      </if>
+      <if test="vo.state != null" >
+        AND a.state = #{vo.state,jdbcType=BIT}
+      </if>
+      <if test="vo.createTime != null" >
+        AND a.create_time = #{vo.createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="vo.type != null" >
+        AND b.type = #{vo.type,jdbcType=VARCHAR}
+      </if>
+       </where>
+  </if>
+  limit #{pageSizeBegin},#{pageSize}
+  </select>
+  
+  <!-- 查询出所有试题 -->
+  <select id="findAllQuestion" resultMap="BaseResultMap">
+       select * from question a left join question_type b on a.questiontype_id=b.id
+  </select>
+</mapper>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bs.lsx.dao.ExamMapper" >
+  <resultMap id="BaseResultMap" type="com.bs.lsx.entity.Exam" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="exam_paperid" property="examPaperid" jdbcType="INTEGER" />
+    <result column="group_id" property="groupId" jdbcType="INTEGER" />
+    <result column="exam_name" property="examName" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    
+    <!-- 试卷名 -->
+    <result column="paper_name" property="paperName" jdbcType="VARCHAR" />
+    <!-- 用户组名 -->
+    <result column="group_name" property="groupName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, exam_paperid, group_id, exam_name, creator, create_time, start_time, end_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from exam
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from exam
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bs.lsx.entity.Exam" >
+    insert into exam (id, exam_paperid, exam_name, 
+      creator, create_time, start_time, 
+      end_time)
+    values (#{id,jdbcType=INTEGER}, #{examPaperid,jdbcType=INTEGER}, #{groupId,jdbcType=INTEGER}, #{examName,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bs.lsx.entity.Exam" >
+    insert into exam
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="examPaperid != null" >
+        exam_paperid,
+      </if>
+      <if test="groupId != null" >
+        group_id,
+      </if>
+      <if test="examName != null" >
+        exam_name,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="examPaperid != null" >
+        #{examPaperid,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="examName != null" >
+        #{examName,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bs.lsx.entity.Exam" >
+    update exam
+    <set >
+      <if test="examPaperid != null" >
+        exam_paperid = #{examPaperid,jdbcType=INTEGER},
+      </if>
+      <if test="groupId != null" >
+        group_id = #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="examName != null" >
+        exam_name = #{examName,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bs.lsx.entity.Exam" >
+    update exam
+    set exam_paperid = #{examPaperid,jdbcType=INTEGER},
+      group_id = #{groupId,jdbcType=INTEGER},
+      exam_name = #{examName,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 查询出考试列表 -->
+  <select id="getExamList" resultMap="BaseResultMap">
+       select * from exam a left join exam_paper b on a.exam_paperid=b.id left join ugroup c on a.group_id=c.id
+       <if test="vo != null">
+       <where>
+       <if test="vo.id != null">
+        AND a.id = #{vo.id, jdbcType=INTEGER}
+       </if>
+       <if test="vo.examPaperid != null">
+        AND a.exam_paperid = #{vo.examPaperid, jdbcType=INTEGER}
+       </if>
+       <if test="vo.groupId != null">
+        AND a.group_id = #{vo.groupId, jdbcType=INTEGER}
+       </if>
+       <if test="vo.examName != null">
+        AND a.exam_name = #{vo.examName, jdbcType=VARCHAR}
+       </if>
+       <if test="vo.creator != null">
+        AND a.creator = #{vo.creator, jdbcType=VARCHAR}
+       </if>
+       <if test="vo.createTime != null">
+        AND a.create_time = #{vo.createTime, jdbcType=TIMSTAMP}
+       </if>
+       <if test="vo.startTime != null">
+        AND a.start_time = #{vo.startTime, jdbcType=TIMSTAMP}
+       </if>
+       <if test="vo.endTime != null">
+        AND a.end_time = #{vo.endTime, jdbcType=TIMSTAMP}
+       </if>
+       <if test="vo.paperName != null">
+        AND a.paper_name = #{vo.paperName, jdbcType=VARCHAR}
+       </if>
+       <if test="vo.groupName != null">
+        AND a.group_name = #{vo.groupName, jdbcType=VARCHAR}
+       </if>
+       </where>
+       </if>
+  limit 0,10
+  </select>
+  
+  <!-- 查询出考试数量 -->
+  <select id="getExamCount" resultType="java.lang.Integer">
+      select count(1) from exam
+      <if test="vo != null">
+       <where>
+       <if test="vo.id != null">
+        AND id = #{vo.id, jdbcType=INTEGER}
+       </if>
+       <if test="vo.examPaperid != null">
+        AND exam_paperid = #{vo.examPaperid, jdbcType=INTEGER}
+       </if>
+       <if test="vo.groupId != null">
+        AND group_id = #{vo.groupId, jdbcType=INTEGER}
+       </if>
+       <if test="vo.examName != null">
+        AND exam_name = #{vo.examName, jdbcType=VARCHAR}
+       </if>
+       <if test="vo.creator != null">
+        AND creator = #{vo.creator, jdbcType=VARCHAR}
+       </if>
+       <if test="vo.createTime != null">
+        AND create_time = #{vo.createTime, jdbcType=TIMSTAMP}
+       </if>
+       <if test="vo.startTime != null">
+        AND start_time = #{vo.startTime, jdbcType=TIMSTAMP}
+       </if>
+       <if test="vo.endTime != null">
+        AND end_time = #{vo.endTime, jdbcType=TIMSTAMP}
+       </if>
+       </where>
+       </if>
+  </select>
+  
+  <!-- 分页查询考试 -->
+  <select id="getExamPage" resultMap="BaseResultMap">
+       select * from exam a left join exam_paper b on a.exam_paperid=b.id left join ugroup c on a.group_id=c.id
+       <if test="vo != null">
+       <where>
+       <if test="vo.id != null">
+        AND id = #{vo.id, jdbcType=INTEGER}
+       </if>
+       <if test="vo.examPaperid != null">
+        AND exam_paperid = #{vo.examPaperid, jdbcType=INTEGER}
+       </if>
+       <if test="vo.groupId != null">
+        AND group_id = #{vo.groupId, jdbcType=INTEGER}
+       </if>
+       <if test="vo.examName != null">
+        AND exam_name = #{vo.examName, jdbcType=VARCHAR}
+       </if>
+       <if test="vo.creator != null">
+        AND creator = #{vo.creator, jdbcType=VARCHAR}
+       </if>
+       <if test="vo.createTime != null">
+        AND create_time = #{vo.createTime, jdbcType=TIMSTAMP}
+       </if>
+       <if test="vo.startTime != null">
+        AND start_time = #{vo.startTime, jdbcType=TIMSTAMP}
+       </if>
+       <if test="vo.endTime != null">
+        AND end_time = #{vo.endTime, jdbcType=TIMSTAMP}
+       </if>
+       <if test="vo.paperName != null">
+        AND paper_name = #{vo.paperName, jdbcType=VARCHAR}
+       </if>
+       <if test="vo.groupName != null">
+        AND group_name = #{vo.groupName, jdbcType=VARCHAR}
+       </if>
+       </where>
+       </if>
+  limit #{pageSizeBegin},#{pageSize}
+  </select>
+</mapper>

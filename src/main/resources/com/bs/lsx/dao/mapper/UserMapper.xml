@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bs.lsx.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.bs.lsx.entity.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="truename" property="truename" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="BIT" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="BIT" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="regtime" property="regtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, username, truename, email, gender, password, state, age, ip, regtime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.bs.lsx.entity.User" >
+    insert into user (id, username, truename, 
+      email, gender, password, 
+      state, age, ip, regtime
+      )
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{truename,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{gender,jdbcType=BIT}, #{password,jdbcType=VARCHAR}, 
+      #{state,jdbcType=BIT}, #{age,jdbcType=INTEGER}, #{ip,jdbcType=VARCHAR}, #{regtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bs.lsx.entity.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="truename != null" >
+        truename,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="gender != null" >
+        gender,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="regtime != null" >
+        regtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="truename != null" >
+        #{truename,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        #{gender,jdbcType=BIT},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=BIT},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null" >
+        #{regtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bs.lsx.entity.User" >
+    update user
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="truename != null" >
+        truename = #{truename,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null" >
+        gender = #{gender,jdbcType=BIT},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=BIT},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="regtime != null" >
+        regtime = #{regtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bs.lsx.entity.User" >
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+      truename = #{truename,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=BIT},
+      password = #{password,jdbcType=VARCHAR},
+      state = #{state,jdbcType=BIT},
+      age = #{age,jdbcType=INTEGER},
+      ip = #{ip,jdbcType=VARCHAR},
+      regtime = #{regtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+<!-- 根据用户名密码查询用户 -->
+<select id="getUserByUsernameAndPwd" parameterType="com.bs.lsx.entity.User" resultMap="BaseResultMap">
+    select * from user where username=#{username,jdbcType=VARCHAR} 
+    AND password=#{password,jdbcType=VARCHAR}
+</select>
+<!-- 查询出用户数量 -->
+ <select id="getUserCount" resultType="java.lang.Integer">
+       select count(1) from user
+       <if test="vo != null">
+       <where>
+       <if test="vo.id != null" >
+        AND id = #{vo.id,jdbcType=INTEGER}
+      </if>
+      <if test="vo.username != null" >
+        AND username = #{vo.username,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.truename != null" >
+        AND truename = #{vo.truename,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.email != null" >
+        AND email = #{vo.email,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.gender != null" >
+        AND gender = #{vo.gender,jdbcType=BIT}
+      </if>
+      <if test="vo.password != null" >
+        AND password = #{vo.password,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.state != null" >
+        AND state = #{vo.state,jdbcType=BIT}
+      </if>
+      <if test="vo.age != null" >
+        AND age = #{vo.age,jdbcType=INTEGER}
+      </if>
+      <if test="vo.ip != null" >
+        AND ip = #{vo.ip,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.regtime != null" >
+        AND regtime = #{vo.regtime,jdbcType=TIMESTAMP}
+      </if>
+       </where>
+  </if>
+  </select>
+  
+  <!-- 分页查询用户 -->
+  <select id="getUserPage" resultMap="BaseResultMap">
+       select * from user
+       <if test="vo != null">
+       <where>
+       <if test="vo.id != null" >
+        AND id = #{vo.id,jdbcType=INTEGER}
+      </if>
+      <if test="vo.username != null" >
+        AND username = #{vo.username,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.truename != null" >
+        AND truename = #{vo.truename,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.email != null" >
+        AND email = #{vo.email,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.gender != null" >
+        AND gender = #{vo.gender,jdbcType=BIT}
+      </if>
+      <if test="vo.password != null" >
+        AND password = #{vo.password,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.state != null" >
+        AND state = #{vo.state,jdbcType=BIT}
+      </if>
+      <if test="vo.age != null" >
+        AND age = #{vo.age,jdbcType=INTEGER}
+      </if>
+      <if test="vo.ip != null" >
+        AND ip = #{vo.ip,jdbcType=VARCHAR}
+      </if>
+      <if test="vo.regtime != null" >
+        AND regtime = #{vo.regtime,jdbcType=TIMESTAMP}
+      </if>
+       </where>
+  </if>
+  limit #{pageSizeBegin},#{pageSize}
+  </select>
+</mapper>
